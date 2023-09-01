@@ -22,10 +22,9 @@ class LecturerController extends Controller
      */
     public function index()
     {
-        $lecturers = Lecturer::paginate(10);
+        $lecturers = Lecturer::with('translation')->paginate(10);
         return response([
-            // 'lecturers' => $lecturers
-            "message" => __('lecturers.lecturers_list')
+            'lecturers' => $lecturers
         ], 200);
     }
 
@@ -49,6 +48,7 @@ class LecturerController extends Controller
      */
     public function show(Lecturer $lecturer)
     {
+        $lecturer->load('translation');
         return response([
             'lecturer' => $lecturer
         ], 200);

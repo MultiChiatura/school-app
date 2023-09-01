@@ -21,12 +21,16 @@ class LecturerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            "name" => "required|string|max:255",
-            "position" => "required|string|max:255",
-            "description" => "required|string",
+        $rules = [
             "linkedin" => "required|string|max:255",
             "image" => "required|mimes:png,jpg,jpeg"
         ];
+        foreach (config('translatable.locales') as $locale) {
+            $rules["$locale.name"] = "required|string|max:255";
+            $rules["$locale.position"] = "required|string|max:255";
+            $rules["$locale.description"] = "required|string";
+        }
+
+        return $rules;
     }
 }

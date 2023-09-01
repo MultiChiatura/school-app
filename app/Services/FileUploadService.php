@@ -8,11 +8,12 @@ use Illuminate\Support\Str;
 
 class FileUploadService
 {
-    public function fileUpload($file, $storagePath = 'imgs'){
+    public function fileUpload($file, $storagePath = 'imgs')
+    {
         $mime = $file->getClientOriginalExtension();
         $originalTitle = $file->getClientOriginalName();
 
-        $newName = Str::random(64).'.'.$mime;
+        $newName = Str::random(10) . now() . '.' . $mime;
 
         $path = $file->storeAs(
             $storagePath,
@@ -26,7 +27,8 @@ class FileUploadService
         ];
     }
 
-    public function deleteFile($path){
+    public function deleteFile($path)
+    {
         if (Storage::exists($path)) {
             return Storage::delete($path);
         }
